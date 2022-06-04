@@ -1,0 +1,61 @@
+<main>
+  <div style="display: flex; flex-direction: column; justify-content: center; gap: 2rem">
+    <h1>Please select your Quiz Format</h1>
+    <div style="display: flex; flex-direction: row; justify-content: center; gap: 2rem">
+      <button class="btn btn-primary" (click)="binary()" value="0">Binary</button>
+      <button class="btn btn-primary" (click)="multiple()">Multiple Choice</button>
+    </div>
+  </div>
+
+  <div>
+    <div class="card container flex-row justify-content-center align-items-center"
+      style="width: 50rem; margin-bottom: 1rem; margin-top: 1rem;" *ngFor="let quiz of quizzes">
+      <div class="card-body">
+        <h3 class="card-title">{{quiz.quizName}}</h3>
+        <p class="card-text">Id:{{quiz.quizId}}</p>
+      </div>
+      <button class="btn btn-primary" (click)="showForm(quiz.quizId)">Take Quiz</button>
+    </div>
+  </div>
+
+  <form *ngIf="userClick" #form="ngForm" (submit)="onUserSubmit(form)" style="display: flex">
+    <input ngModel type="text" class="form-control" required name="userName" placeholder="Enter Your UserName">
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+
+  <div *ngIf="binaryFormat !== []">
+    <div *ngFor="let question of binaryFormat; let rowIndex = index">
+      <div class="card" style="width: 18rem;" *ngIf="rowIndex == currentQuestion">
+        <div class="card-body">
+          <h5 class="card-title">Who said it ?</h5>
+          <p class="card-text">{{question.quote}}</p>
+          <p class="card-text"><strong>{{question.author}}</strong></p>
+
+          <button class="btn btn-primary" type="button" [disabled]="isNext"
+            (click)="checkAnswer(true, question.quoteId, question.author, question.correctAuthor)">True</button>
+          <button class="btn btn-primary" type="button" [disabled]="isNext"
+            (click)="checkAnswer(false, question.quoteId, question.author, question.correctAuthor)">False</button>
+
+          <button *ngIf="isNext" (click)="goNext()">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="multipleFormat !== []">
+    <div class="card" style="width: 18rem;" *ngFor="let question of multipleFormat; let rowIndex = index">
+      <div class="card-body" *ngIf="rowIndex == currentQuestion">
+        <h1 class="card-title">{{question.quote}}</h1>
+        <button type="button" class="btn btn-primary button card-text" [disabled]="isNext"
+          (click)="checkAnswer(true, question.quoteId, question.correctAuthor)">{{question.correctAuthor}}</button>
+        <div *ngFor="let incorrectAnswer of question?.incorrectAuthors">
+          <button type="button" class="btn btn-primary button card-text" [disabled]="isNext"
+            (click)="checkAnswer(false, question.quoteId, question.correctAuthor)">{{incorrectAnswer}}</button>
+        </div>
+        <button *ngIf="isNext" (click)="goNext()">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-secondary" *ngIf="endQuiz" (click)="submitQuiz()">Submit Quiz</button>
+</main>

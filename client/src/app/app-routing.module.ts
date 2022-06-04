@@ -1,0 +1,17 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { QuizzesComponent } from './pages/quizzes/quizzes.component';
+import { UsersComponent } from './pages/users/users.component';
+
+const routes: Routes = [
+  { path: '', component: UsersComponent },
+  { path: 'quizzes', component: QuizzesComponent },
+  { path: '**', redirectTo: '' }
+
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

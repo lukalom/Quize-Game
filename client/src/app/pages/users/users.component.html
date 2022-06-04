@@ -1,0 +1,19 @@
+<h3>Search User Stats</h3>
+<form #form="ngForm" (submit)="searchUser(form)">
+    <input ngModel type="text" required name="userName" placeholder="Search User Statistic">
+    <button type="submit">Submit</button>
+</form>
+
+<div *ngIf="userStats.length !== 0">
+    <pre>{{userStats | json}}</pre>
+</div>
+
+<br>
+<br>
+<br>
+
+<h3>Create User From Here To Take Quiz</h3>
+<form #createform="ngForm" (submit)="createUser(createform)">
+    <input ngModel type="text" required name="userName" placeholder="Create User">
+    <button class="btn-primary" type="submit">Submit</button>
+</form>
