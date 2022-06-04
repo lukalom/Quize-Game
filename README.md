@@ -12,7 +12,7 @@ when you run the project Database will be automatically created and all data
 will be seeded for testing purposes. there will be inserted quotes, and quizzes both binary 
 and multiple choices.
 
-			Services
+						Services
 1.GameStats Management
 
 method - GetUserGeneralStats(string userName)
